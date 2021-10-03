@@ -1,21 +1,35 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ChatBot {
-    private static TaskList[] all_lists = new TaskList[100];
-    private static int counter = 0;
+    private static HashMap<Integer, TaskList> all_tasks = new HashMap<>();
+    private static int counter = 1;
 
     public static void addem(String text){
-        all_lists[counter] = new TaskList(text);
-        counter++;
+        if (text.startsWith("todo")){
+            all_tasks.put(counter, new todo(text.substring(5)));
+            counter++;
+        } else if (text.startsWith("deadline")){
+            all_tasks.put(counter, new Deadline(text.substring(9, text.indexOf('/')),
+                    text.substring(text.indexOf('/')+4)));
+            counter++;
+        } else if(text.startsWith("event")){
+            all_tasks.put(counter, new Events(text.substring(9, text.indexOf('/')),
+                    text.substring(text.indexOf('/')+4)));
+            counter++;
+        } else {
+            System.out.println("Try Again");
+        }
+        // debugging with try/catch
+        // do not add same task
     }
 
     public static void printem(){
-        if(counter == 0){
+        if(all_tasks.isEmpty()){
             System.out.println("Nothing to do");
         } else {
-            for (int i = 0; i < counter; i++) {
-                System.out.println(i + 1 + ".[" + all_lists[i].getStatusIcon() + "] " +
-                        all_lists[i].getTask());
+            for (int i = 1; i < counter; i++) {
+                System.out.println(i + ". " + all_tasks.get(i).printtask());
             }
         }
     }
@@ -43,7 +57,7 @@ public class ChatBot {
                     printem();
                     in = new Scanner(System.in);
                     Integer taskno = Integer.parseInt(in.nextLine());
-                    all_lists[taskno - 1].done();
+                    all_tasks.get(taskno).done();
                 case "bye":
                     break;
                 default:
