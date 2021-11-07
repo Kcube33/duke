@@ -1,7 +1,10 @@
-public class todo extends TaskList{
+package duke.tasks;
 
-    public todo(String description) {
+public class Todo extends TaskList{
+
+    public Todo(String description) {
         super(description);
+        this.type = "T";
     }
 
     @Override
