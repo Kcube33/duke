@@ -1,9 +1,11 @@
 package duke.tasks;
 
+import java.time.LocalDateTime;
+
 public class Deadline extends TaskList{
 
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
         this.type = "D";
@@ -11,6 +13,6 @@ public class Deadline extends TaskList{
 
     @Override
     public String printtask(){
-        return "[D]" + super.printtask() + " (by: " + by + ")";
+        return "[D]" + super.printtask() + " (by: " + getBy() + ")";
     }
 }

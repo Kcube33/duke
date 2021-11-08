@@ -1,6 +1,8 @@
 package duke;
 
 import duke.tasks.*;
+
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
@@ -9,6 +11,10 @@ public class ChatBot {
 
     private static ArrayList<TaskList> all_tasks = new ArrayList<>();
 
+    /** Prints out all tasks stored in the arraylist row by row
+     * Utilises the method printtask from each individual task in the arraylist
+     * @see TaskList#printtask()  Method to generate output for each different task
+     * */
     public static void printem(){
         if(all_tasks.isEmpty()){
             System.out.println("Nothing to do");
@@ -19,6 +25,17 @@ public class ChatBot {
         }
     }
 
+    /**
+     * Main method of Duke
+     * This method intakes the input from the user and determines if it is valid command for Duke. It
+     * only parses the first word of the input to avoid confusion.
+     * When a valid input is detected, Duke will proceed to perform the function accordingly
+     * At the end of every command, outstanding tasks will be saved to the hard disk
+     * @param storage The list of tasks retrieved from the saved text file of outstanding tasks
+     * @see Parser This class performs the various intake of user inputs
+     * @see CreateTasks Class responsible to execute the creation and deletion of tasks
+     * @see WriteToFile#startWriting(ArrayList) Takes the existing ArrayList and writes to file
+     */
     public ChatBot(ArrayList<TaskList> storage){
         all_tasks = storage;
         String logo = " ____        _        \n"
@@ -58,10 +75,16 @@ public class ChatBot {
                     CreateTasks.Todo(all_tasks, userIn);
                     break;
                 case "deadline":
-                    CreateTasks.Deadline(all_tasks,userIn);
+                    System.out.println("Please enter deadline of task in \"yyyy-MM-dd HH:mm\"");
+                    String by = Parser.UIinput();
+                    CreateTasks.Deadline(all_tasks,userIn, by);
                     break;
                 case "event":
-                    CreateTasks.Event(all_tasks,userIn);
+                    System.out.println("Please enter event date and time in \"yyyy-MM-dd HH:mm\"");
+                    String at = Parser.UIinput();
+                    System.out.println("Please enter estimated end time and date in \"yyyy-MM-dd HH:mm\"");
+                    String end = Parser.UIinput();
+                    CreateTasks.Event(all_tasks,userIn, at, end);
                     break;
                 case "bye":
                     break;
