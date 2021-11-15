@@ -41,8 +41,10 @@ public class WriteToFile {
 
     /** append each new task to the text file */
     private static void addToFile(File f, TaskList oneTask) throws IOException {
+        assert f != null;
         FileWriter fw = new FileWriter(f.getAbsolutePath(),true);
         Integer D = oneTask.isDone ? 1:0;
+        assert D < 2;
         String temp = " | " + D+ " | ";
         if (oneTask.getType().equals("T")){
             fw.write(oneTask.getType() + temp + oneTask.getTask() +  System.lineSeparator());

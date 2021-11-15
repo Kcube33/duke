@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import duke.Parser;
+import duke.exception.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +16,10 @@ class ParserTestDateTime {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime date3 = LocalDateTime.parse("2021-11-14 23:59",formatter);
         String a = "2021-11-14 23:59";
-        assertEquals(date3, Parser.parseDateTime(a));
+        try {
+            assertEquals(date3, Parser.parseDateTime(a));
+        } catch (timelineException e){
+            System.out.println("Fail");
+        }
     }
 }

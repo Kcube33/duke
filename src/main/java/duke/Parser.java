@@ -70,20 +70,30 @@ public class Parser {
     }
 
     /**
+     * Parse the keyword from {@code text} to find from list of tasks
+     * @param text
+     * @return keyword
+     */
+    public static String parseFind(String text){
+        task = text.substring(5);
+        return task;
+    }
+
+    /**
      * Returns a date and time in a 24-hour format
      * The date and time must be indicated in string form in {@code text} the text
      * parameter is supposed to be entered in the below stated format
      * @param text the date and time in String format
      * @return date and time in proper date/time format
      */
-    public static LocalDateTime parseDateTime(String text){
+    public static LocalDateTime parseDateTime(String text) throws timelineException{
         LocalDateTime date1 = null;
         try{
             text = text.trim();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             date1 = LocalDateTime.parse(text,formatter);
         } catch (DateTimeParseException pe){
-            System.out.println("Please try again in format: yyyy-MM-dd HH:mm");
+            throw new timelineException("Fail");
         }
         return date1;
     }

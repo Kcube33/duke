@@ -1,5 +1,7 @@
 package duke.tasks;
 
+import duke.Parser;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,11 +27,16 @@ public class TaskList {
     public void done(){
         if (this.isDone == true){
             System.out.println("_______________________\n This task has already been completed");
-            System.out.println("[X] " + this.task + "\n_______________________");
+            System.out.println("Do you wish to undo this task? Enter y to confirm\n_______________________");
+            String result = Parser.UIinput();
+            if (result.equals("y")){
+                this.isDone = false;
+                System.out.println("[" + this.type + "][ ] " + this.task + "\n_______________________");
+            }
         } else{
             this.isDone = true;
             System.out.println("_______________________\n Nice! I've marked this task as done:");
-            System.out.println("[X] " + this.task + "\n_______________________");
+            System.out.println("[" + this.type + "][X] " + this.task + "\n_______________________");
         }
 
     }

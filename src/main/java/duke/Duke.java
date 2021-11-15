@@ -9,12 +9,10 @@ public class Duke {
 
     /**
      * Initialises duke
-     * Initialises
-     *
-     *
+     * Searches for existing file on hard disk and loads the tasks into Duke if any
      */
     public static void main(String[] args) {
         readFile.initialise(storage);
-        ChatBot a = new ChatBot(storage);
+        ChatBot.startDuke(storage);
     }
 }
